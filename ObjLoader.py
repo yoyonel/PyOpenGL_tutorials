@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class ObjLoader:
     def __init__(self):
         self.vert_coords = []
@@ -14,9 +15,11 @@ class ObjLoader:
 
     def load_model(self, file):
         for line in open(file, 'r'):
-            if line.startswith('#'): continue
+            if line.startswith('#'):
+                continue
             values = line.split()
-            if not values: continue
+            if not values:
+                continue
 
             if values[0] == 'v':
                 self.vert_coords.append(values[1:4])
@@ -31,9 +34,9 @@ class ObjLoader:
                 norm_i = []
                 for v in values[1:4]:
                     w = v.split('/')
-                    face_i.append(int(w[0])-1)
-                    text_i.append(int(w[1])-1)
-                    norm_i.append(int(w[2])-1)
+                    face_i.append(int(w[0]) - 1)
+                    text_i.append(int(w[1]) - 1)
+                    norm_i.append(int(w[2]) - 1)
                 self.vertex_index.append(face_i)
                 self.texture_index.append(text_i)
                 self.normal_index.append(norm_i)
@@ -52,22 +55,3 @@ class ObjLoader:
             self.model.extend(self.norm_coords[i])
 
         self.model = np.array(self.model, dtype='float32')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

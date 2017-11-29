@@ -4,10 +4,39 @@ import ShaderLoader
 import numpy
 import pyrr
 from PIL import Image
+
 from ObjLoader import *
+
+# from pymesh import obj
+
 
 def window_resize(window, width, height):
     glViewport(0, 0, width, height)
+
+
+def initVBO(obj_fn):
+    obj = ObjLoader()
+    obj.load_model(obj_fn)
+
+    texture_offset = len(obj.vertex_index) * 12
+    normal_offset = (texture_offset + len(obj.texture_index) * 8)
+
+    VBO = glGenBuffers(1)
+    glBindBuffer(GL_ARRAY_BUFFER, VBO)
+    glBufferData(GL_ARRAY_BUFFER, obj.model.itemsize * len(obj.model), obj.model, GL_STATIC_DRAW)
+
+    # positions
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, obj.model.itemsize * 3, ctypes.c_void_p(0))
+    glEnableVertexAttribArray(0)
+    # textures
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, obj.model.itemsize * 2, ctypes.c_void_p(texture_offset))
+    glEnableVertexAttribArray(1)
+    # normals
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, obj.model.itemsize * 3, ctypes.c_void_p(normal_offset))
+    glEnableVertexAttribArray(2)
+
+    return obj
+
 
 def main():
 
@@ -17,7 +46,7 @@ def main():
 
     w_width, w_height = 800, 600
 
-    #glfw.window_hint(glfw.RESIZABLE, GL_FALSE)
+    # glfw.window_hint(glfw.RESIZABLE, GL_FALSE)
 
     window = glfw.create_window(w_width, w_height, "My OpenGL window", None, None)
 
@@ -28,27 +57,12 @@ def main():
     glfw.make_context_current(window)
     glfw.set_window_size_callback(window, window_resize)
 
-    obj = ObjLoader()
-    obj.load_model("res/monkey/monkey_smooth.obj")
-
-    texture_offset = len(obj.vertex_index)*12
-    normal_offset = (texture_offset + len(obj.texture_index)*8)
-
     shader = ShaderLoader.compile_shader("shaders/video_18_vert.vs", "shaders/video_18_frag.fs")
 
-    VBO = glGenBuffers(1)
-    glBindBuffer(GL_ARRAY_BUFFER, VBO)
-    glBufferData(GL_ARRAY_BUFFER, obj.model.itemsize * len(obj.model), obj.model, GL_STATIC_DRAW)
+    obj_fn = "res/cube.obj"
 
-    #positions
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, obj.model.itemsize * 3, ctypes.c_void_p(0))
-    glEnableVertexAttribArray(0)
-    #textures
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, obj.model.itemsize * 2, ctypes.c_void_p(texture_offset))
-    glEnableVertexAttribArray(1)
-    #normals
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, obj.model.itemsize * 3, ctypes.c_void_p(normal_offset))
-    glEnableVertexAttribArray(2)
+    # obj = obj.Obj(obj)
+    obj = initVBO(obj_fn)
 
     texture = glGenTextures(1)
     glBindTexture(GL_TEXTURE_2D, texture)
@@ -59,7 +73,8 @@ def main():
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
     # load image
-    image = Image.open("res/monkey/monkey.jpg")
+    # image = Image.open("res/monkey/monkey.jpg")
+    image = Image.open("res/cube_texture.jpg")
     flipped_image = image.transpose(Image.FLIP_TOP_BOTTOM)
     img_data = numpy.array(list(flipped_image.getdata()), numpy.uint8)
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.width, image.height, 0, GL_RGB, GL_UNSIGNED_BYTE, img_data)
@@ -90,17 +105,19 @@ def main():
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
-        #rot_x = pyrr.Matrix44.from_x_rotation(0.5 * glfw.get_time() )
-        rot_y = pyrr.Matrix44.from_y_rotation(0.8 * glfw.get_time() )
+        # rot_x = pyrr.Matrix44.from_x_rotation(0.5 * glfw.get_time() )
+        rot_y = pyrr.Matrix44.from_y_rotation(0.8 * glfw.get_time())
 
         glUniformMatrix4fv(transform_loc, 1, GL_FALSE, rot_y)
         glUniformMatrix4fv(light_loc, 1, GL_FALSE, rot_y)
 
+        # glDrawArrays(GL_TRIANGLES, 0, len(obj.vertex_index))
         glDrawArrays(GL_TRIANGLES, 0, len(obj.vertex_index))
 
         glfw.swap_buffers(window)
 
     glfw.terminate()
+
 
 if __name__ == "__main__":
     main()

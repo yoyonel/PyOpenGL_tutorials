@@ -20,46 +20,46 @@ def main():
 
     glfw.make_context_current(window)
     #        positions         colors          texture coords
-    cube = [-0.5, -0.5,  0.5,  1.0, 0.0, 0.0,  0.0, 0.0,
-             0.5, -0.5,  0.5,  0.0, 1.0, 0.0,  1.0, 0.0,
-             0.5,  0.5,  0.5,  0.0, 0.0, 1.0,  1.0, 1.0,
-            -0.5,  0.5,  0.5,  1.0, 1.0, 1.0,  0.0, 1.0,
+    cube = [-0.5, -0.5, 0.5, 1.0, 0.0, 0.0, 0.0, 0.0,
+            0.5, -0.5, 0.5, 0.0, 1.0, 0.0, 1.0, 0.0,
+            0.5, 0.5, 0.5, 0.0, 0.0, 1.0, 1.0, 1.0,
+            -0.5, 0.5, 0.5, 1.0, 1.0, 1.0, 0.0, 1.0,
 
-            -0.5, -0.5, -0.5,  1.0, 0.0, 0.0,  0.0, 0.0,
-             0.5, -0.5, -0.5,  0.0, 1.0, 0.0,  1.0, 0.0,
-             0.5,  0.5, -0.5,  0.0, 0.0, 1.0,  1.0, 1.0,
-            -0.5,  0.5, -0.5,  1.0, 1.0, 1.0,  0.0, 1.0,
+            -0.5, -0.5, -0.5, 1.0, 0.0, 0.0, 0.0, 0.0,
+            0.5, -0.5, -0.5, 0.0, 1.0, 0.0, 1.0, 0.0,
+            0.5, 0.5, -0.5, 0.0, 0.0, 1.0, 1.0, 1.0,
+            -0.5, 0.5, -0.5, 1.0, 1.0, 1.0, 0.0, 1.0,
 
-             0.5, -0.5, -0.5,  1.0, 0.0, 0.0,  0.0, 0.0,
-             0.5,  0.5, -0.5,  0.0, 1.0, 0.0,  1.0, 0.0,
-             0.5,  0.5,  0.5,  0.0, 0.0, 1.0,  1.0, 1.0,
-             0.5, -0.5,  0.5,  1.0, 1.0, 1.0,  0.0, 1.0,
+            0.5, -0.5, -0.5, 1.0, 0.0, 0.0, 0.0, 0.0,
+            0.5, 0.5, -0.5, 0.0, 1.0, 0.0, 1.0, 0.0,
+            0.5, 0.5, 0.5, 0.0, 0.0, 1.0, 1.0, 1.0,
+            0.5, -0.5, 0.5, 1.0, 1.0, 1.0, 0.0, 1.0,
 
-            -0.5,  0.5, -0.5,  1.0, 0.0, 0.0,  0.0, 0.0,
-            -0.5, -0.5, -0.5,  0.0, 1.0, 0.0,  1.0, 0.0,
-            -0.5, -0.5,  0.5,  0.0, 0.0, 1.0,  1.0, 1.0,
-            -0.5,  0.5,  0.5,  1.0, 1.0, 1.0,  0.0, 1.0,
+            -0.5, 0.5, -0.5, 1.0, 0.0, 0.0, 0.0, 0.0,
+            -0.5, -0.5, -0.5, 0.0, 1.0, 0.0, 1.0, 0.0,
+            -0.5, -0.5, 0.5, 0.0, 0.0, 1.0, 1.0, 1.0,
+            -0.5, 0.5, 0.5, 1.0, 1.0, 1.0, 0.0, 1.0,
 
-            -0.5, -0.5, -0.5,  1.0, 0.0, 0.0,  0.0, 0.0,
-             0.5, -0.5, -0.5,  0.0, 1.0, 0.0,  1.0, 0.0,
-             0.5, -0.5,  0.5,  0.0, 0.0, 1.0,  1.0, 1.0,
-            -0.5, -0.5,  0.5,  1.0, 1.0, 1.0,  0.0, 1.0,
+            -0.5, -0.5, -0.5, 1.0, 0.0, 0.0, 0.0, 0.0,
+            0.5, -0.5, -0.5, 0.0, 1.0, 0.0, 1.0, 0.0,
+            0.5, -0.5, 0.5, 0.0, 0.0, 1.0, 1.0, 1.0,
+            -0.5, -0.5, 0.5, 1.0, 1.0, 1.0, 0.0, 1.0,
 
-             0.5,  0.5, -0.5,  1.0, 0.0, 0.0,  0.0, 0.0,
-            -0.5,  0.5, -0.5,  0.0, 1.0, 0.0,  1.0, 0.0,
-            -0.5,  0.5,  0.5,  0.0, 0.0, 1.0,  1.0, 1.0,
-             0.5,  0.5,  0.5,  1.0, 1.0, 1.0,  0.0, 1.0]
+            0.5, 0.5, -0.5, 1.0, 0.0, 0.0, 0.0, 0.0,
+            -0.5, 0.5, -0.5, 0.0, 1.0, 0.0, 1.0, 0.0,
+            -0.5, 0.5, 0.5, 0.0, 0.0, 1.0, 1.0, 1.0,
+            0.5, 0.5, 0.5, 1.0, 1.0, 1.0, 0.0, 1.0]
 
-    cube = numpy.array(cube, dtype = numpy.float32)
+    cube = numpy.array(cube, dtype=numpy.float32)
 
-    indices = [ 0,  1,  2,  2,  3,  0,
-                4,  5,  6,  6,  7,  4,
-                8,  9, 10, 10, 11,  8,
+    indices = [0, 1, 2, 2, 3, 0,
+               4, 5, 6, 6, 7, 4,
+               8, 9, 10, 10, 11, 8,
                12, 13, 14, 14, 15, 12,
                16, 17, 18, 18, 19, 16,
                20, 21, 22, 22, 23, 20]
 
-    indices = numpy.array(indices, dtype= numpy.uint32)
+    indices = numpy.array(indices, dtype=numpy.uint32)
 
     vertex_shader = """
     #version 330
@@ -100,16 +100,15 @@ def main():
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO)
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.itemsize * len(indices), indices, GL_STATIC_DRAW)
 
-    #position
+    # position
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, cube.itemsize * 8, ctypes.c_void_p(0))
     glEnableVertexAttribArray(0)
-    #color
+    # color
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, cube.itemsize * 8, ctypes.c_void_p(12))
     glEnableVertexAttribArray(1)
-    #texture
+    # texture
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, cube.itemsize * 8, ctypes.c_void_p(24))
     glEnableVertexAttribArray(2)
-
 
     texture = glGenTextures(1)
     glBindTexture(GL_TEXTURE_2D, texture)
@@ -125,7 +124,6 @@ def main():
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.width, image.height, 0, GL_RGB, GL_UNSIGNED_BYTE, img_data)
     glEnable(GL_TEXTURE_2D)
 
-
     glUseProgram(shader)
 
     glClearColor(0.2, 0.3, 0.2, 1.0)
@@ -137,8 +135,8 @@ def main():
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
-        rot_x = pyrr.Matrix44.from_x_rotation(0.5 * glfw.get_time() )
-        rot_y = pyrr.Matrix44.from_y_rotation(0.8 * glfw.get_time() )
+        rot_x = pyrr.Matrix44.from_x_rotation(0.5 * glfw.get_time())
+        rot_y = pyrr.Matrix44.from_y_rotation(0.8 * glfw.get_time())
 
         transformLoc = glGetUniformLocation(shader, "transform")
         glUniformMatrix4fv(transformLoc, 1, GL_FALSE, rot_x * rot_y)
@@ -148,6 +146,7 @@ def main():
         glfw.swap_buffers(window)
 
     glfw.terminate()
+
 
 if __name__ == "__main__":
     main()
