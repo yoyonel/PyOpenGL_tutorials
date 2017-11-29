@@ -34,9 +34,18 @@ class ObjLoader:
                 norm_i = []
                 for v in values[1:4]:
                     w = v.split('/')
-                    face_i.append(int(w[0]) - 1)
-                    text_i.append(int(w[1]) - 1)
-                    norm_i.append(int(w[2]) - 1)
+                    try:
+                        face_i.append(int(w[0]) - 1)
+                    except ValueError:
+                        pass
+                    try:
+                        text_i.append(int(w[1]) - 1)
+                    except ValueError:
+                        pass
+                    try:
+                        norm_i.append(int(w[2]) - 1)
+                    except ValueError:
+                        pass
                 self.vertex_index.append(face_i)
                 self.texture_index.append(text_i)
                 self.normal_index.append(norm_i)

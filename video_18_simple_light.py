@@ -14,15 +14,22 @@ def window_resize(window, width, height):
     glViewport(0, 0, width, height)
 
 
-def initVBO(obj_fn):
+def init_vbo(obj_fn):
+    """
+
+    :param obj_fn:
+    :type obj_fn: str
+    :return:
+    :rtype: ObjLoader
+    """
     obj = ObjLoader()
     obj.load_model(obj_fn)
 
     texture_offset = len(obj.vertex_index) * 12
     normal_offset = (texture_offset + len(obj.texture_index) * 8)
 
-    VBO = glGenBuffers(1)
-    glBindBuffer(GL_ARRAY_BUFFER, VBO)
+    vbo = glGenBuffers(1)
+    glBindBuffer(GL_ARRAY_BUFFER, vbo)
     glBufferData(GL_ARRAY_BUFFER, obj.model.itemsize * len(obj.model), obj.model, GL_STATIC_DRAW)
 
     # positions
@@ -46,7 +53,7 @@ def main():
 
     w_width, w_height = 800, 600
 
-    # glfw.window_hint(glfw.RESIZABLE, GL_FALSE)
+    glfw.window_hint(glfw.RESIZABLE, GL_FALSE)
 
     window = glfw.create_window(w_width, w_height, "My OpenGL window", None, None)
 
@@ -59,10 +66,11 @@ def main():
 
     shader = ShaderLoader.compile_shader("shaders/video_18_vert.vs", "shaders/video_18_frag.fs")
 
-    obj_fn = "res/cube.obj"
+    obj_fn = "res/monkey/monkey_smooth.obj"
+    # obj_fn = "res/cube.obj"
 
     # obj = obj.Obj(obj)
-    obj = initVBO(obj_fn)
+    obj = init_vbo(obj_fn)
 
     texture = glGenTextures(1)
     glBindTexture(GL_TEXTURE_2D, texture)
@@ -73,8 +81,10 @@ def main():
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
     # load image
-    # image = Image.open("res/monkey/monkey.jpg")
-    image = Image.open("res/cube_texture.jpg")
+    # image = Image.open("res/cube_texture.jpg")
+    # image = Image.open("res/old_stone_floor_texture_01-512x512.png")
+    # image = Image.open("res/seamless_animal_fur-texture.jpg")
+    image = Image.open("res/BrickES1_128.jpg")
     flipped_image = image.transpose(Image.FLIP_TOP_BOTTOM)
     img_data = numpy.array(list(flipped_image.getdata()), numpy.uint8)
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.width, image.height, 0, GL_RGB, GL_UNSIGNED_BYTE, img_data)
@@ -84,7 +94,7 @@ def main():
 
     glClearColor(0.2, 0.3, 0.2, 1.0)
     glEnable(GL_DEPTH_TEST)
-    #glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
+    # glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
 
     view = pyrr.matrix44.create_from_translation(pyrr.Vector3([0.0, 0.0, -3.0]))
     projection = pyrr.matrix44.create_perspective_projection_matrix(65.0, w_width / w_height, 0.1, 100.0)
@@ -111,7 +121,6 @@ def main():
         glUniformMatrix4fv(transform_loc, 1, GL_FALSE, rot_y)
         glUniformMatrix4fv(light_loc, 1, GL_FALSE, rot_y)
 
-        # glDrawArrays(GL_TRIANGLES, 0, len(obj.vertex_index))
         glDrawArrays(GL_TRIANGLES, 0, len(obj.vertex_index))
 
         glfw.swap_buffers(window)
